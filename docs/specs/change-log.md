@@ -121,6 +121,6 @@ change is safe enough for the current stage.
 - Driver: make the portable CI workflow execute from the template root and keep archive verification trustworthy when GitHub Actions restores cached downloads.
 - Changed specs: CI workflow, onboarding, project context, development plan, and README export guidance.
 - Runtime impact: none.
-- Decision: cache only Godot archives; fetch the official SHA512 manifest fresh on every CI run before extracting or exporting.
+- Decision: cache only Godot archives; fetch the official SHA512 manifest fresh on every CI run, and run checksum verification from the archive cache directory before extracting or exporting.
 - Validation: workflow YAML parse, CI root/path static checks, Godot 4.7 runner and headless load, Windows/Web export smoke, and Linux template prerequisite diagnostic.
 - Follow-up: GitHub Actions remains the execution authority for the Linux artifact and complete hosted CI matrix.

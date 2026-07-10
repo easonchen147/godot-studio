@@ -46,8 +46,11 @@ jobs:
             fi
           done
 
-          grep -F "$editor_archive" "$checksum_manifest" | sha512sum --check --status -
-          grep -F "$templates_archive" "$checksum_manifest" | sha512sum --check --status -
+          (
+            cd "$cache_dir"
+            grep -F "$editor_archive" "$checksum_manifest" | sha512sum --check --status -
+            grep -F "$templates_archive" "$checksum_manifest" | sha512sum --check --status -
+          )
 
           editor_dir="$cache_dir/editor"
           templates_dir="$cache_dir/templates"
@@ -122,8 +125,11 @@ jobs:
             fi
           done
 
-          grep -F "$editor_archive" "$checksum_manifest" | sha512sum --check --status -
-          grep -F "$templates_archive" "$checksum_manifest" | sha512sum --check --status -
+          (
+            cd "$cache_dir"
+            grep -F "$editor_archive" "$checksum_manifest" | sha512sum --check --status -
+            grep -F "$templates_archive" "$checksum_manifest" | sha512sum --check --status -
+          )
 
           editor_dir="$cache_dir/editor"
           templates_dir="$cache_dir/templates"

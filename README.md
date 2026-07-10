@@ -405,7 +405,7 @@ tools\godot\export-smoke.ps1
 - [ ] `tools/godot/run-tests.ps1` 通过。
 - [ ] `tools/godot/headless-check.ps1` 通过。
 - [ ] 项目能在 Godot 4.7 打开并运行。
-- [ ] 导出烟测通过，或明确记录本机 export templates 缺口。
+- [ ] 导出烟测通过。
 
 ## 许可证
 
@@ -414,8 +414,7 @@ tools\godot\export-smoke.ps1
 Godot Engine 没有被 vendored 到仓库中。GDQuest shader source 以其 MIT 许可说明导入；上游非商业美术和模型素材已明确排除。
 
 
-## Continuous Delivery
+## 持续交付
 
-- GitHub Actions validates the SceneTree runner and headless project load before exporting Windows Desktop, Linux, and Web artifacts.
-- CI downloads pinned official Godot 4.7 stable archives and verifies them against the release SHA512 manifest before extraction.
-- Local export smoke remains target-aware; a missing Linux template on Windows is a local prerequisite signal, while CI is the cross-platform authority.
+- GitHub Actions 会先验证 SceneTree 测试运行器和 headless 项目加载，再导出 Windows Desktop、Linux 和 Web 产物。
+- CI 下载固定版本的官方 Godot 4.7 stable 归档，并在解压前使用发布版 SHA512 manifest 校验归档完整性。
