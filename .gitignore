@@ -1,0 +1,10 @@
+.godot/
+.tmp-godot-user/
+build/
+exports/
+*.tmp
+*.translation
+.import/
+export_credentials.cfg
+.DS_Store
+Thumbs.db

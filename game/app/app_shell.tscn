@@ -1,0 +1,46 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://game/app/app_shell.gd" id="1_app_shell"]
+[ext_resource type="PackedScene" path="res://features/ui/menu/main_menu.tscn" id="2_main_menu"]
+[ext_resource type="PackedScene" path="res://features/ui/menu/options_menu.tscn" id="3_options_menu"]
+[ext_resource type="PackedScene" path="res://features/ui/menu/credits_screen.tscn" id="4_credits_screen"]
+[ext_resource type="PackedScene" path="res://features/ui/menu/pause_menu.tscn" id="5_pause_menu"]
+[ext_resource type="PackedScene" path="res://features/ui/results/result_screen.tscn" id="6_result_screen"]
+[ext_resource type="PackedScene" path="res://features/ui/debug/debug_overlay.tscn" id="7_debug_overlay"]
+[ext_resource type="PackedScene" path="res://features/vfx/shader_showcase/shader_showcase.tscn" id="8_shader_showcase"]
+
+[node name="AppShell" type="Node"]
+script = ExtResource("1_app_shell")
+
+[node name="ContentRoot" type="Node2D" parent="."]
+
+[node name="MainMenu" parent="." instance=ExtResource("2_main_menu")]
+
+[node name="OptionsMenu" parent="." instance=ExtResource("3_options_menu")]
+visible = false
+
+[node name="CreditsScreen" parent="." instance=ExtResource("4_credits_screen")]
+visible = false
+
+[node name="ShaderShowcase" parent="." instance=ExtResource("8_shader_showcase")]
+visible = false
+
+[node name="PauseMenu" parent="." instance=ExtResource("5_pause_menu")]
+visible = false
+
+[node name="ResultScreen" parent="." instance=ExtResource("6_result_screen")]
+visible = false
+
+[node name="DebugOverlay" parent="." instance=ExtResource("7_debug_overlay")]
+
+[node name="TransitionLayer" type="CanvasLayer" parent="."]
+layer = 30
+
+[node name="TransitionRect" type="ColorRect" parent="TransitionLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

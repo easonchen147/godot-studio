@@ -1,0 +1,61 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://features/ui/debug/debug_overlay.gd" id="1_debug"]
+
+[node name="DebugOverlay" type="CanvasLayer"]
+layer = 20
+script = ExtResource("1_debug")
+
+[node name="Panel" type="PanelContainer" parent="."]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 430.0
+offset_bottom = 220.0
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "Debug"
+
+[node name="SceneLabel" type="Label" parent="Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Scene:"
+
+[node name="StateLabel" type="Label" parent="Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "State:"
+
+[node name="ScoreLabel" type="Label" parent="Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Score:"
+
+[node name="SettingsLabel" type="Label" parent="Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Settings:"
+
+[node name="MessageLabel" type="Label" parent="Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Message:"
+
+[node name="HBox" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+
+[node name="RestartButton" type="Button" parent="Panel/VBox/HBox"]
+layout_mode = 2
+text = "Restart"
+
+[node name="MenuButton" type="Button" parent="Panel/VBox/HBox"]
+layout_mode = 2
+text = "Menu"
+
+[connection signal="pressed" from="Panel/VBox/HBox/RestartButton" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="Panel/VBox/HBox/MenuButton" to="." method="_on_menu_pressed"]

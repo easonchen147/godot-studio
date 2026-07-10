@@ -1,0 +1,44 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Godot Studio Starter 4.7"
+config/description="Portable production-grade Godot 4.7 game scaffold for AI-assisted development."
+config/version="0.1.0"
+run/main_scene="res://game/boot/boot.tscn"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+
+[audio]
+
+buses/default_bus_layout="res://audio_bus_layout.tres"
+
+[autoload]
+
+SignalBus="*res://game/autoload/signal_bus.gd"
+SettingsManager="*res://game/autoload/settings_manager.gd"
+GameState="*res://game/autoload/game_state.gd"
+AudioManager="*res://game/autoload/audio_manager.gd"
+SceneLoader="*res://game/autoload/scene_loader.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+
+[gui]
+
+theme/custom="res://shared/resources/studio_ui_theme.tres"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="gl_compatibility"

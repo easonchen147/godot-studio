@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://game/main/main.gd" id="1_main_script"]
+[ext_resource type="PackedScene" path="res://features/levels/level_001/level_001.tscn" id="2_level_001"]
+[ext_resource type="PackedScene" path="res://features/ui/hud/hud.tscn" id="3_hud_scene"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main_script")
+
+[node name="LevelRoot" parent="." instance=ExtResource("2_level_001")]
+
+[node name="HUD" parent="." instance=ExtResource("3_hud_scene")]

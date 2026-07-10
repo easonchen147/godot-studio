@@ -1,0 +1,50 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://features/vfx/shader_showcase/shader_showcase.gd" id="1_shader_showcase"]
+
+[node name="ShaderShowcase" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_shader_showcase")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 42.0
+offset_top = 34.0
+offset_right = -42.0
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "Shader Showcase"
+horizontal_alignment = 1
+
+[node name="SourceLabel" type="Label" parent="Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "GDQuest shader subset"
+horizontal_alignment = 1
+
+[node name="Grid" type="GridContainer" parent="Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 4
+
+[node name="BackButton" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="pressed" from="Panel/VBox/BackButton" to="." method="_on_back_pressed"]

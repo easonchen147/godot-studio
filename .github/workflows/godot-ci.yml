@@ -1,0 +1,151 @@
+name: Godot 4.7 CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  GODOT_RELEASE: 4.7-stable
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Cache Godot editor archives
+        id: godot-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/godot-4.7/Godot_v4.7-stable_linux.x86_64.zip
+            ~/.cache/godot-4.7/Godot_v4.7-stable_export_templates.tpz
+          key: godot-${{ runner.os }}-4.7-stable
+
+      - name: Install verified Godot 4.7 editor and templates
+        shell: bash
+        run: |
+          set -euo pipefail
+          cache_dir="$HOME/.cache/godot-4.7"
+          editor_archive="Godot_v4.7-stable_linux.x86_64.zip"
+          templates_archive="Godot_v4.7-stable_export_templates.tpz"
+          checksum_manifest="$RUNNER_TEMP/SHA512-SUMS.txt"
+          release_url="https://github.com/godotengine/godot-builds/releases/download/${GODOT_RELEASE}"
+
+          mkdir -p "$cache_dir"
+          curl --fail --location --retry 3 --retry-delay 2 --output "$checksum_manifest" "$release_url/SHA512-SUMS.txt"
+
+          for asset in "$editor_archive" "$templates_archive"; do
+            if [ ! -f "$cache_dir/$asset" ]; then
+              curl --fail --location --retry 3 --retry-delay 2 --output "$cache_dir/$asset" "$release_url/$asset"
+            fi
+          done
+
+          grep -F "$editor_archive" "$checksum_manifest" | sha512sum --check --status -
+          grep -F "$templates_archive" "$checksum_manifest" | sha512sum --check --status -
+
+          editor_dir="$cache_dir/editor"
+          templates_dir="$cache_dir/templates"
+          rm -rf "$editor_dir" "$templates_dir"
+          mkdir -p "$editor_dir" "$templates_dir"
+          unzip -q "$cache_dir/$editor_archive" -d "$editor_dir"
+          unzip -q "$cache_dir/$templates_archive" "templates/*" -d "$templates_dir"
+          chmod +x "$editor_dir/Godot_v4.7-stable_linux.x86_64"
+
+          target_templates="$HOME/.local/share/godot/export_templates/4.7.stable"
+          mkdir -p "$target_templates"
+          cp -a "$templates_dir/templates/." "$target_templates/"
+
+      - name: Run SceneTree test runner
+        shell: bash
+        run: |
+          "$HOME/.cache/godot-4.7/editor/Godot_v4.7-stable_linux.x86_64" --headless --path . --script res://tests/test_runner.gd
+
+      - name: Check headless project load
+        shell: bash
+        run: |
+          "$HOME/.cache/godot-4.7/editor/Godot_v4.7-stable_linux.x86_64" --headless --path . --quit
+
+  export:
+    needs: verify
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - preset: Windows Desktop
+            output: build/windows/godot-studio-starter.exe
+            directory: build/windows
+            artifact: godot-studio-windows
+          - preset: Linux
+            output: build/linux/godot-studio-starter.x86_64
+            directory: build/linux
+            artifact: godot-studio-linux
+          - preset: Web
+            output: build/web/index.html
+            directory: build/web
+            artifact: godot-studio-web
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Cache Godot editor archives
+        id: godot-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/godot-4.7/Godot_v4.7-stable_linux.x86_64.zip
+            ~/.cache/godot-4.7/Godot_v4.7-stable_export_templates.tpz
+          key: godot-${{ runner.os }}-4.7-stable
+
+      - name: Install verified Godot 4.7 editor and templates
+        shell: bash
+        run: |
+          set -euo pipefail
+          cache_dir="$HOME/.cache/godot-4.7"
+          editor_archive="Godot_v4.7-stable_linux.x86_64.zip"
+          templates_archive="Godot_v4.7-stable_export_templates.tpz"
+          checksum_manifest="$RUNNER_TEMP/SHA512-SUMS.txt"
+          release_url="https://github.com/godotengine/godot-builds/releases/download/${GODOT_RELEASE}"
+
+          mkdir -p "$cache_dir"
+          curl --fail --location --retry 3 --retry-delay 2 --output "$checksum_manifest" "$release_url/SHA512-SUMS.txt"
+
+          for asset in "$editor_archive" "$templates_archive"; do
+            if [ ! -f "$cache_dir/$asset" ]; then
+              curl --fail --location --retry 3 --retry-delay 2 --output "$cache_dir/$asset" "$release_url/$asset"
+            fi
+          done
+
+          grep -F "$editor_archive" "$checksum_manifest" | sha512sum --check --status -
+          grep -F "$templates_archive" "$checksum_manifest" | sha512sum --check --status -
+
+          editor_dir="$cache_dir/editor"
+          templates_dir="$cache_dir/templates"
+          rm -rf "$editor_dir" "$templates_dir"
+          mkdir -p "$editor_dir" "$templates_dir"
+          unzip -q "$cache_dir/$editor_archive" -d "$editor_dir"
+          unzip -q "$cache_dir/$templates_archive" "templates/*" -d "$templates_dir"
+          chmod +x "$editor_dir/Godot_v4.7-stable_linux.x86_64"
+
+          target_templates="$HOME/.local/share/godot/export_templates/4.7.stable"
+          mkdir -p "$target_templates"
+          cp -a "$templates_dir/templates/." "$target_templates/"
+
+      - name: Export ${{ matrix.preset }}
+        shell: bash
+        run: |
+          mkdir -p "$(dirname '${{ matrix.output }}')"
+          "$HOME/.cache/godot-4.7/editor/Godot_v4.7-stable_linux.x86_64" --headless --path . --export-release "${{ matrix.preset }}" "${{ matrix.output }}"
+
+      - name: Upload ${{ matrix.artifact }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: ${{ matrix.directory }}
+          if-no-files-found: error

@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://features/levels/level_001/level_001.gd" id="1_level_script"]
+[ext_resource type="PackedScene" path="res://features/player/player.tscn" id="2_player_scene"]
+[ext_resource type="PackedScene" path="res://features/pickups/pickup.tscn" id="3_pickup_scene"]
+[ext_resource type="PackedScene" path="res://features/goals/goal_zone.tscn" id="4_goal_scene"]
+
+[node name="Level001" type="Node2D"]
+script = ExtResource("1_level_script")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Player" parent="World" instance=ExtResource("2_player_scene")]
+position = Vector2(240, 360)
+
+[node name="Pickup" parent="World" instance=ExtResource("3_pickup_scene")]
+position = Vector2(640, 360)
+
+[node name="GoalZone" parent="World" instance=ExtResource("4_goal_scene")]
+position = Vector2(1040, 360)

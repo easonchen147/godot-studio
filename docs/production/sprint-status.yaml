@@ -1,0 +1,51 @@
+project: godot-studio-starter
+engine: Godot 4.7
+current_milestone: continuous-delivery-baseline
+status: 2d-open-source-template-ready-with-shader-library-and-studio-workflow
+last_verified:
+  godot_cli: Godot 4.7 headless project load passed on 2026-07-10
+  test_runner: Godot 4.7 test runner passed 103 checks on 2026-07-10, including the deterministic first-playable integration flow
+  static_paths: stale version/path/API scan passed on 2026-07-09
+  open_source_scan: credential/local-path scan passed on 2026-07-09; GDQuest non-commercial license mentions are documented exclusions
+  copy_ready: temp-folder copy headless smoke passed on 2026-07-09
+  export_smoke: Windows and Web smoke exports passed on 2026-07-10; Linux returned the expected missing local template diagnostic (exit 2), with CI authoritative for Linux artifact verification
+template_scope:
+  dimension: 2D-first
+  default_nodes: Node2D, Control, CharacterBody2D, Area2D, CollisionShape2D, Camera2D, TileMapLayer
+  expansion_rule: 3D, multiplayer, and live-service systems require a new ADR
+studio_workflow:
+  skill: .codex/skills/godot-2d-game-studio/SKILL.md
+  docs_path: docs/studio/
+  fixed_outputs:
+    - brainstorm-log.md
+    - grilling-gate.md
+    - project-charter.md
+    - gameplay-spec.md
+    - balance-sheet.md
+    - level-plan.md
+    - asset-production-plan.md
+    - implementation-tickets.md
+shader_library:
+  source: https://github.com/gdquest-demos/godot-shaders
+  integrated_commit: 05a3931acc85513b67b80b6e88671a596a3f9693
+  runtime_path: res://assets/runtime/shaders/gdquest/
+  showcase: res://features/vfx/shader_showcase/shader_showcase.tscn
+  license_boundary: MIT shader source only; no upstream CC-BY-NC-SA art assets imported
+first_playable:
+  entry: res://game/boot/boot.tscn
+  shell: res://game/app/app_shell.tscn
+  gameplay: game/main sample gameplay module
+  level: res://features/levels/level_001/level_001.tscn
+  loop: collect_pickup_then_reach_goal
+  automated_contract: app_shell_start_pickup_hud_goal_result_restart
+continuous_delivery:
+  ci: GitHub Actions verifies release archives, tests, headless load, and Windows/Linux/Web exports without deployment or secrets.
+  local_linux: Windows hosts may not have the Linux export template; CI is authoritative for that target.
+open_risks:
+  - Placeholder polygon visuals must be replaced by project assets.
+  - Template ships with scaffold-level UI and gameplay only; derived games still need project-specific content, tuning, and progression data.
+next_actions:
+  - Fill docs/specs/game-brief.md.
+  - Fill docs/studio/ project soul and prototype planning documents.
+  - Replace placeholder loop with the real first playable mechanic.
+  - Add runtime assets and update docs/specs/asset-list.md.

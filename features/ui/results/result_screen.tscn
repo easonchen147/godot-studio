@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://features/ui/results/result_screen.gd" id="1_result"]
+
+[node name="ResultScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_result")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -170.0
+offset_right = 260.0
+offset_bottom = 170.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Run Complete"
+horizontal_alignment = 1
+
+[node name="SummaryLabel" type="Label" parent="Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Score: 0"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+text = "Restart"
+
+[node name="MenuButton" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+text = "Main Menu"
+
+[connection signal="pressed" from="Panel/VBox/RestartButton" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="Panel/VBox/MenuButton" to="." method="_on_menu_pressed"]

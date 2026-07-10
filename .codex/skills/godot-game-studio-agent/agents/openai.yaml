@@ -1,0 +1,7 @@
+interface:
+  display_name: "Game Studio Agent"
+  short_description: "Portable Codex studio workflow for playable Godot, Unity, and Unreal games."
+  default_prompt: "Use $godot-game-studio-agent to route a first-playable game task through professional studio roles for Godot, Unity, or Unreal."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,2 +1,32 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+* text=auto eol=lf
+
+# Keep generated Godot text resources diffable.
+*.gd text eol=lf
+*.gdshader text eol=lf
+*.tscn text eol=lf
+*.tres text eol=lf
+*.godot text eol=lf
+*.cfg text eol=lf
+*.md text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+
+# Binary assets. A derived game can enable Git LFS later with `git lfs track`
+# for the formats it actually uses.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.aseprite binary
+*.psd binary
+*.kra binary
+*.wav binary
+*.ogg binary
+*.mp3 binary
+*.ttf binary
+*.otf binary
+*.blend binary
+*.glb binary
+*.gltf binary
+*.res binary
